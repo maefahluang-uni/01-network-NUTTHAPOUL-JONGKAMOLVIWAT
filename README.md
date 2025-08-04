@@ -20,7 +20,7 @@ The `MockWebServer` in package `th.mfu` serves the web server in our system. It 
 4. Finally, close the client socket 
 5. Study the code in `main()` and tell me What it does?
 ```
- write your through here.
+This structure allows the server to handle multiple client connections concurrently, with each connection being processed in its own thread.
 ```
 6. Run the `main()`, point the web browser to `http://localhost:8080` and `http://localhost:8081`
 It should shows a simple HTML with the word such as  `Hello, Web! on Port 8080`.
@@ -52,7 +52,59 @@ Think about the following,  modify the code to experiment it and put your though
 - What would be the benefit of running many instances?
 
 ```
-  Your thought here...
+  - How can we run `MockWebserver` on different port? 
+To run multiple instances of MockWebServer on different ports, you can specify the desired port when starting each server instance. Here's how you can do it:
+
+MockWebServer server1 = new MockWebServer();
+server1.start(8080);
+
+MockWebServer server2 = new MockWebServer();
+server2.start(8081);
+
+This approach allows each server to listen on a unique port, enabling you to simulate different services or endpoints simultaneously.
+
+- How can we run more than 2 instances of  `MockWebserver`? 
+can run multiple instances of MockWebServer by creating and starting each server on a different port. For example:
+
+
+MockWebServer server1 = new MockWebServer();
+server1.start(8080);
+
+MockWebServer server2 = new MockWebServer();
+server2.start(8081);
+
+MockWebServer server3 = new MockWebServer();
+server3.start(8082);
+
+Ensure that each server is assigned a unique port to avoid conflicts. This setup is useful for simulating multiple services or endpoints in your tests.
+
+- How can we change the content in HTML such as showing table, more text and adding images?
+To customize the HTML content returned by MockWebServer, you can set the response body to include HTML elements such as tables, text, and images. Here's an example:
+
+server.enqueue(new MockResponse()
+
+    .setHeader("Content-Type", "text/html")
+    .setBody("<html><body><h1>Hello, Web!</h1><table><tr><td>Data</td></tr></table><img src='image.jpg' /></body></html>"));
+
+This response includes:
+
+//A heading (<h1>)
+//A table (<table>)
+//An image (<img>)
+
+can modify the HTML content as needed to simulate different scenarios.
+
+- What would be the benefit of running many instances?
+Running multiple instances of MockWebServer on different ports offers several advantages:
+
+Simulate Multiple Services: You can mimic interactions between different services or components in your system.
+
+Isolated Testing: Each server instance can be configured with different responses, allowing for isolated testing of various scenarios.
+
+Parallel Testing: Multiple instances enable you to test different parts of your application simultaneously, improving test coverage and efficiency.
+
+This setup is particularly useful in integration testing, where simulating interactions between various services is essential.
+
 ```
 **Please push the code back to Github to submit this lab**
 After you push, ensure you have green checkmark on the repository.
